@@ -18,7 +18,7 @@ describe "Spike" do
                            { name: 'zeppelin' } ],
                    headers: {})
 
-    client = Octokit::Client.new(:access_token => personal_access_token)
+    client = Octokit::Client.new(access_token: personal_access_token)
     expect(client.repositories.pluck(:name))
       .to eq(%w(led zeppelin))
   end
