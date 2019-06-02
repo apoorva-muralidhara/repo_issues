@@ -12,10 +12,11 @@ RSpec.feature "Login" do
     fill_in 'Personal Access Token', with: personal_access_token
     click_button('Login')
 
+    expect(page).to have_text('Enter your GitHub personal access token below')
     expect(page).to have_text('That personal access token is invalid!')
   end
 
-  xscenario 'Personal access token is valid' do
+  scenario 'Personal access token is valid' do
     stub_successful_github_api_call(repo_names: repo_names)
 
     visit '/login'
