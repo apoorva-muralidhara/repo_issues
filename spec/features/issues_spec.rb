@@ -25,12 +25,8 @@ RSpec.feature "Issues", type: :feature do
     stub_successful_github_api_call(repo_names: repo_names)
 
     login
-
-    visit '/repos'
-
-    stub_successful_github_api_issues_call
-    click_link(repo_names.last)
-
+    click_on_repo_link
+    
     expect(page).to have_text('Issues:')
 
     expect(page).to have_text(first_title)
@@ -43,11 +39,7 @@ RSpec.feature "Issues", type: :feature do
     stub_successful_github_api_call(repo_names: repo_names)
 
     login
-
-    visit '/repos'
-
-    stub_successful_github_api_issues_call
-    click_link(repo_names.last)
+    click_on_repo_link
 
     expect(page).to have_text('Issues:')
 
@@ -64,6 +56,14 @@ RSpec.feature "Issues", type: :feature do
     fill_in 'Personal Access Token', with: personal_access_token
     click_button('Login')
   end
+
+  def click_on_repo_link
+    visit '/repos'
+
+    stub_successful_github_api_issues_call
+    click_link(repo_names.last)
+  end
+
 
   def stub_successful_github_api_issues_call
     
