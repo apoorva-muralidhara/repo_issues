@@ -1,6 +1,6 @@
 <h1>Login</h1>
 <h2>Enter your GitHub personal access token below:</h2>
-<%= flash[:alert] %>
+<h2><%= flash[:alert] %></h2>
 <%= form_tag('/sessions') do %>
   <%= label_tag :personal_access_token, 'Personal Access Token:' %>
   <%= text_field_tag :personal_access_token %><br>
