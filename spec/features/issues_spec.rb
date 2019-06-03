@@ -36,6 +36,8 @@ RSpec.feature "Issues", type: :feature do
 
     expect(page).to have_text(formatted_earlier_date)
     expect(page).to have_text(later_ago_in_words)
+
+    expect(page).to have_xpath("//img[contains(@src, '#{avatar_url}')]")
   end
 
   scenario "Has link back to repos page" do
