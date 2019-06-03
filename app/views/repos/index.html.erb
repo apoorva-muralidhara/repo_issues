@@ -3,5 +3,5 @@
   <h2>Repos:</h2>
 <% end %>
 <% @repo_names.each do |repo_name| %>
-  <%= repo_name %><br>
+  <%= link_to repo_name, repo_issues_path(repo_name) %><br>
 <% end %>

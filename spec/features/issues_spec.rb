@@ -1,14 +1,8 @@
 require 'rails_helper'
 
-RSpec.feature "Repos" do
+RSpec.feature "Issues", type: :feature do
   let(:personal_access_token) { 'my_very_own_token' }
   let(:repo_names) { %w(led zeppelin) }
-
-  scenario "User is not logged in" do
-    visit '/repos'
-
-    expect(page).to have_text('You are not logged in!')
-  end
 
   scenario "User is logged in" do
     stub_successful_github_api_call(repo_names: repo_names)
@@ -17,11 +11,9 @@ RSpec.feature "Repos" do
 
     visit '/repos'
 
-    expect(page).to have_text('Repos:')
+    click_link(repo_names.last)
 
-    repo_names.each do |repo_name|
-      expect(page).to have_text(repo_name)
-    end
+    expect(page).to have_text('Issues:')
   end
 
   private
