@@ -7,6 +7,9 @@ RSpec.feature "Issues", type: :feature do
   let(:earlier) { Time.zone.local(2018, 3, 18, 16, 30, 45).time }
   let(:later) { Time.zone.local(2019, 1, 25, 15, 15, 45).time }
 
+  let(:formatted_earlier_date) { '18/03/2018' }
+  let(:formatted_later_date) { '25/01/2018' }
+
   let(:first_title) { 'Gem never works, unfortunately' }
   let(:second_title) { 'Actually, gem always works, fortunately' }
 
@@ -29,8 +32,11 @@ RSpec.feature "Issues", type: :feature do
     click_link(repo_names.last)
 
     expect(page).to have_text('Issues:')
+
     expect(page).to have_text(first_title)
     expect(page).to have_text(second_title)
+
+    expect(page).to have_text(formatted_earlier_date)
   end
 
   private
