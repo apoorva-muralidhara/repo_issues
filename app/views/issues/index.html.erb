@@ -10,7 +10,7 @@
     <tr>
       <td>
 	<% if url = issue.dig(:assignee, :avatar_url) %>
-	  <%= image_tag(url) %>
+	  <%= image_tag(url, size: '40x40') %>
 	<% end %>
       </td>
       <td><%= issue[:title] %></td>
