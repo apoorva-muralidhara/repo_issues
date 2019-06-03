@@ -8,7 +8,8 @@ RSpec.feature "Issues", type: :feature do
   let(:later) { Time.zone.local(2019, 1, 25, 15, 15, 45).time }
 
   let(:formatted_earlier_date) { '18/03/2018' }
-  let(:formatted_later_date) { '25/01/2018' }
+
+  let(:later_ago_in_words) { '4 months ago' }
 
   let(:first_title) { 'Gem never works, unfortunately' }
   let(:second_title) { 'Actually, gem always works, fortunately' }
@@ -24,6 +25,7 @@ RSpec.feature "Issues", type: :feature do
   scenario "Shows issues for repo" do
     stub_successful_github_api_call(repo_names: repo_names)
 
+
     login
     click_on_repo_link
     
@@ -33,6 +35,7 @@ RSpec.feature "Issues", type: :feature do
     expect(page).to have_text(second_title)
 
     expect(page).to have_text(formatted_earlier_date)
+    expect(page).to have_text(later_ago_in_words)
   end
 
   scenario "Has link back to repos page" do
@@ -66,7 +69,6 @@ RSpec.feature "Issues", type: :feature do
 
 
   def stub_successful_github_api_issues_call
-    
     stub_request(:get,
                  "https://api.github.com/repos/#{repo_names.last}/issues")
       .with(headers: { 'Accept' => 'application/vnd.github.v3+json',
