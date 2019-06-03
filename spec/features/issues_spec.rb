@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.feature "Issues", type: :feature do
   let(:personal_access_token) { 'my_very_own_token' }
-  let(:repo_names) { %w(led zeppelin) }
+  let(:repo_names) { %w(travisjeffery/timecop thoughtbot/shoulda-matchers) }
 
   scenario "User is logged in" do
     stub_successful_github_api_call(repo_names: repo_names)

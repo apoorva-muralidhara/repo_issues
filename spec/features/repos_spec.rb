@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.feature "Repos" do
   let(:personal_access_token) { 'my_very_own_token' }
-  let(:repo_names) { %w(led zeppelin) }
+  let(:repo_names) { %w(travisjeffery/timecop thoughtbot/shoulda-matchers) }
 
   scenario "User is not logged in" do
     visit '/repos'

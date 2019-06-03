@@ -61,7 +61,7 @@ RSpec.configure do |config|
 end
 
 def stub_successful_github_api_call(repo_names:)
-  body = repo_names.map { |name| { name: name } }
+  body = repo_names.map { |name| { full_name: name } }
 
   stub_request(:get, "https://api.github.com/user/repos").
     with(headers: { 'Accept' => 'application/vnd.github.v3+json',

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.feature "Login" do
   let(:personal_access_token) { 'my_very_own_token' }
-  let(:repo_names) { %w(led zeppelin) }
+  let(:repo_names) { %w(travisjeffery/timecop thoughtbot/shoulda-matchers) }
 
   scenario "Personal access token is invalid" do
     stub_failed_github_api_call
