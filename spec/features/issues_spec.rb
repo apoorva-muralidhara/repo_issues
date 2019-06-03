@@ -21,7 +21,7 @@ RSpec.feature "Issues", type: :feature do
        assignee: { avatar_url: avatar_url } }]
   end
   
-  scenario "User is logged in" do
+  scenario "Shows issues for repo" do
     stub_successful_github_api_call(repo_names: repo_names)
 
     login
@@ -37,6 +37,23 @@ RSpec.feature "Issues", type: :feature do
     expect(page).to have_text(second_title)
 
     expect(page).to have_text(formatted_earlier_date)
+  end
+
+  scenario "Has link back to repos page" do
+    stub_successful_github_api_call(repo_names: repo_names)
+
+    login
+
+    visit '/repos'
+
+    stub_successful_github_api_issues_call
+    click_link(repo_names.last)
+
+    expect(page).to have_text('Issues:')
+
+    click_link('Repos')
+
+    expect(page).to have_text('Repos:')
   end
 
   private
