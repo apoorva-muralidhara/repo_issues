@@ -9,8 +9,8 @@
   <% @issues.each do |issue| %>
     <tr>
       <td>
-	<% if issue.dig(:assignee, :avatar_url) %>
-	  <%= image_tag(issue.dig(:assignee, :avatar_url)) %>
+	<% if url = issue.dig(:assignee, :avatar_url) %>
+	  <%= image_tag(url) %>
 	<% end %>
       </td>
       <td><%= issue[:title] %></td>
