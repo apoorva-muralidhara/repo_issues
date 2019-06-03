@@ -8,6 +8,7 @@ class SessionsController < ApplicationController
     begin
       client.repositories
       session[:personal_access_token] = personal_access_token
+      flash.alert = nil
     rescue Octokit::Error => error
       flash.alert = 'That personal access token is invalid!'
       render :new 

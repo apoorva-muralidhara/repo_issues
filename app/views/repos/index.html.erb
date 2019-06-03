@@ -1,5 +1,7 @@
-<h1>Repos#index</h1>
 <h2><%= flash[:alert] %></h2>
+<% if @repo_names.present? %>
+  <h2>Repos:</h2>
+<% end %>
 <% @repo_names.each do |repo_name| %>
   <%= repo_name %><br>
 <% end %>
