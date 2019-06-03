@@ -25,7 +25,6 @@ RSpec.feature "Issues", type: :feature do
   scenario "Shows issues for repo" do
     stub_successful_github_api_call(repo_names: repo_names)
 
-
     login
     click_on_repo_link
     
@@ -38,6 +37,21 @@ RSpec.feature "Issues", type: :feature do
     expect(page).to have_text(later_ago_in_words)
 
     expect(page).to have_xpath("//img[contains(@src, '#{avatar_url}')]")
+  end
+
+  scenario "Can sort issues in ascending alphabetical order by title" do
+    stub_successful_github_api_call(repo_names: repo_names)
+
+    login
+    click_on_repo_link
+    
+    expect(page).to have_text('Issues:')
+
+    expect(page).to have_text(/#{first_title}.*#{second_title}/)
+
+    click_link('Title')
+
+    expect(page).to have_text(/#{second_title}.*#{first_title}/)
   end
 
   scenario "Has link back to repos page" do

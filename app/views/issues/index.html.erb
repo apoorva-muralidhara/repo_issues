@@ -2,7 +2,7 @@
 <table>
   <tr>
     <th>Assignee Avatar</th>
-    <th>Title</th>
+    <th><%= link_to 'Title', request.params.merge(sortBy: 'title') %><th>
     <th>Created Time</th>
     <th>Last Updated</th>
   </tr>
