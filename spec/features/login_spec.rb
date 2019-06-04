@@ -25,5 +25,9 @@ RSpec.feature "Login" do
     click_button('Login')
     
     expect(page).to have_text('Login successful!')
+
+    click_link('Repos')
+
+    expect(page).to have_text('Repos:')
   end
 end
