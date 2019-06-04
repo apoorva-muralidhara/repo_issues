@@ -8,4 +8,6 @@ You can run the server with `rails server` or `rails s`, go to `localhost:3000/l
 
 Clicking on a repo name will bring you to a page listing its issues, with assignee avatar if it exists; title; created time; and last updated.  Clicking on the `Title` header will sort in ascending alphabetical order by title; clicking on the `Last Updated` header will sort in descending chronological order by updated_at.
 
-This app uses the Octokit gem to 
+This app uses the Octokit gem to connect to the GitHub API.  It is tested with RSpec feature specs (controller specs are now deprecated, and request specs would be redundant in this case--there is no model/lib code in this app) in spec/features.  I use WebMock to stub the external calls to the GitHub API.
+
+If I had more time to work on this, I'd implement a Logout link (!), remove the PostgreSQL/ActiveRecord configuration to make this a databaseless Rails app, and figure out how to at least make the issues table look aligned.  I would also adjust the WebMock stubbing so that the response bodies were `Sawyer::Resource` instances, rather than hashes.  This caused a bug because #dig (which works on Hashes) doesn't seem to work on `Sawyer::Resource` instances.
