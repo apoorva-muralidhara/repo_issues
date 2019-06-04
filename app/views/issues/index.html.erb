@@ -4,7 +4,7 @@
     <th>Assignee Avatar</th>
     <th><%= link_to 'Title', request.params.merge(sortBy: 'title') %><th>
     <th>Created Time</th>
-    <th>Last Updated</th>
+    <th><%= link_to 'Last Updated', request.params.merge(sortBy: 'updated_at') %></th>
   </tr>
   <% @issues.each do |issue| %>
     <tr>

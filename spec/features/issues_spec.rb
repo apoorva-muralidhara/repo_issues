@@ -30,6 +30,13 @@ RSpec.feature "Issues", type: :feature do
      { title: third_title, created_at: earlier, updated_at: recently }]
   end
   
+  let(:sorted_body) do
+    [{ title: third_title, created_at: earlier, updated_at: recently },
+     { title: first_title, created_at: earlier, updated_at: later, assignee: nil },
+     { title: second_title, created_at: earlier, updated_at: earlier,
+       assignee: { avatar_url: avatar_url } } ]
+  end
+
   scenario "Shows issues for repo" do
     stub_successful_github_api_call(repo_names: repo_names)
 
@@ -66,6 +73,22 @@ RSpec.feature "Issues", type: :feature do
     expect(page).to have_text(/#{second_title}.*#{third_title}.*#{first_title}/)
   end
 
+  scenario "Can sort issues in descending chronological order by updated_at" do
+    stub_successful_github_api_call(repo_names: repo_names)
+
+    login
+    click_on_repo_link
+    
+    expect(page).to have_text('Issues:')
+
+    expect(page).to have_text(/#{first_title}.*#{second_title}.*#{third_title}/)
+
+    stub_successful_sorted_github_api_issues_call
+    click_link('Last Updated')
+
+    expect(page).to have_text(/#{third_title}.*#{first_title}.*#{second_title}/)
+  end
+
   scenario "Has link back to repos page" do
     stub_successful_github_api_call(repo_names: repo_names)
 
@@ -91,12 +114,13 @@ RSpec.feature "Issues", type: :feature do
   def click_on_repo_link
     visit '/repos'
 
-    stub_successful_github_api_issues_call
+    stub_successful_unsorted_github_api_issues_call
+
     click_link(repo_names.last)
   end
 
 
-  def stub_successful_github_api_issues_call
+  def stub_successful_unsorted_github_api_issues_call
     stub_request(:get,
                  "https://api.github.com/repos/#{repo_names.last}/issues")
       .with(headers: { 'Accept' => 'application/vnd.github.v3+json',
@@ -104,5 +128,14 @@ RSpec.feature "Issues", type: :feature do
        	               'Content-Type' => 'application/json',
        	               'User-Agent' => 'Octokit Ruby Gem 4.14.0'})
       .to_return(status: 200, body: body, headers: {})
+  end
+
+  def stub_successful_sorted_github_api_issues_call
+    stub_request(:get, "https://api.github.com/repos/#{repo_names.last}/issues?direction=desc&sort=updated")
+      .with(headers: { 'Accept'=>'application/vnd.github.v3+json',
+       	               'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+       	               'Content-Type'=>'application/json',
+       	               'User-Agent'=>'Octokit Ruby Gem 4.14.0'})
+      .to_return(status: 200, body: sorted_body, headers: {})
   end
 end
